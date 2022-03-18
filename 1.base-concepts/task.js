@@ -1,29 +1,18 @@
 "use strict";
 
 function solveEquation(a, b, c) {
-  // код для задачи №1 писать здесь
-  let x;
-  let x2;
   const d = b * b - 4 * a * c;
-  let arr = [];
-  //let equation = (a * x ** 2 + b * x + c === 0);
-  if (d < 0) {
-    //arr.push(x = []);
-    console.log(`корней нет`);
-  } else if (d === 0) {
-    arr.push((x = x2 = -b / (2 * a)));
-    console.log(`корень: ${x}`);
-  } else if (d > 0) {
-    arr.push(
-      (x = (-b + Math.sqrt(d)) / (2 * a)),
-      (x2 = (-b - Math.sqrt(d)) / (2 * a))
-    );
-    console.log(`корни: ${x},${x2}`);
-  }
   console.log(`Дискриминант: ${d}`);
-  return arr; // array
+  let arr = [];
+  if (d < 0) {
+    return arr;
+  } else if (d === 0) {
+    return [-b / (2 * a)];
+  } else if (d > 0) {
+    return [(-b + Math.sqrt(d)) / (2 * a), (-b - Math.sqrt(d)) / (2 * a)];
+  }
 }
-let solution = solveEquation(1, -6, 9);
+let solution = solveEquation(1, 5, 4);
 console.log(`Корень:${solution}`);
 //
 //
@@ -34,19 +23,34 @@ console.log(`Корень:${solution}`);
 //
 //
 function calculateTotalMortgage(percent, contribution, amount, date) {
-  const credit = amount - contribution;
-  //const creditDate = date + Date.now();
-  //let dateMonth = date / 12;
-  const monthlyPercent = percent / 100;
-  const totalAmount =
-    credit *
-    (monthlyPercent + monthlyPercent / ((1 + monthlyPercent) ** date - 1));
-  console.log(monthlyPercent);
-  console.log(credit);
+  let totalAmount;
 
-  return totalAmount;
+  if (percent != parseInt(percent)) {
+    totalAmount = `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
+    return totalAmount;
+  } else if (contribution != parseInt(contribution)) {
+    totalAmount = `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
+    return totalAmount;
+  } else if (amount != parseInt(amount)) {
+    totalAmount = `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
+    return totalAmount;
+  } else {
+    //let today = new Date();
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    let yearDifference = date.getFullYear() - currentYear;
+    let month = yearDifference * 12 - currentMonth + date.getMonth();
+    const credit = amount - contribution;
+    const monthlyPercent = percent / 12 / 100;
+    let payment =
+      credit *
+      (monthlyPercent + monthlyPercent / ((1 + monthlyPercent) ** month - 1));
+    totalAmount = payment * month;
+    //console.log(totalAmount)
+    return Number(totalAmount.toFixed(2));
+  }
 }
-
-let payment = calculateTotalMortgage(10, 1000, 50000, 12);
-console.log(`выплата по ипотеке: ${payment.toFixed(2)}`);
-console.log(typeof payment);
+//calculateTotalMortgage();
+//let payment = calculateTotalMortgage(10,1000,50000,12);
+//console.log(`выплата по ипотеке: ${payment.toFixed(2)}`);
+//console.log(typeof payment);
