@@ -27,32 +27,32 @@ class PrintEditionItem {
 class Magazine extends PrintEditionItem {
   constructor(name, releaseDate, pagesCount, state) {
     super(name, releaseDate, pagesCount, state);
-    this.type = "magazine";
+    this.type = 'magazine';
   }
 }
 class Book extends PrintEditionItem {
   constructor(author, name, releaseDate, pagesCount, state) {
     super(name, releaseDate, pagesCount, state);
-    this.type = "book";
+    this.type = 'book';
     this.author = author;
   }
 }
 class NovelBook extends Book {
   constructor(author, name, releaseDate, pagesCount, state) {
     super(author, name, releaseDate, pagesCount, state);
-    this.type = "novel";
+    this.type = 'novel';
   }
 }
 class FantasticBook extends Book {
   constructor(author, name, releaseDate, pagesCount, state) {
     super(author, name, releaseDate, pagesCount, state);
-    this.type = "fantastic";
+    this.type = 'fantastic';
   }
 }
 class DetectiveBook extends Book {
   constructor(author, name, releaseDate, pagesCount, state) {
     super(author, name, releaseDate, pagesCount, state);
-    this.type = "detective";
+    this.type = 'detective';
   }
 }
 
@@ -70,21 +70,21 @@ class Library {
   }
   findBookBy(type, value) {
     let result = this.books.find(
-      (searchedBook) => value === type[searchedBook]
+      (searchedBook) => value === searchedBook[type]
     );
-    if (result === true) {
+    if (result) {
       return result;
     } else {
-      return (result = null);
+      return null;
     }
   }
   giveBookByName(bookName) {
-    // не понимаю как реализовать этот метод
-    let deletedBook = this.books.find(
-      (searchedBook) => searchedBook(bookName) === bookName
-    );
-    if (deletedBook === true) {
-      // this.books.slice[0,1]
+    let index = this.books.findIndex((item) => item.name === bookName);
+    if (index !== -1) {
+      let deletedBook = this.books.splice(index, 1);
+      return deletedBook[0];
+    } else {
+      return null;
     }
   }
 }
