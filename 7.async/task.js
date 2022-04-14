@@ -8,7 +8,7 @@ class AlarmClock {
     if (!alarmId) {
       throw new Error(`Параметр не передан`);
     }
-    if (this.alarmCollection.some((alarm) => alarm.alarmId === alarmId)) {
+    if (this.alarmCollection.some((alarm) => alarm.id === alarmId)) {
       return console.error(`Звонок уже есть`);
     }
 
@@ -56,7 +56,7 @@ class AlarmClock {
   }
 
   stop() {
-    if (!this.timerId) {
+    if (this.timerId) {
       clearInterval(this.timerId);
       this.timerId = null;
     }
